@@ -1,0 +1,12 @@
+kill(all);
+f:48;
+v:28;
+cin:3;
+depends(c,t);
+eq:diff(c,t)=(f/v)•(cin-c);
+sol:ode2(eq,c,g);
+
+ivps:ic1(sol,t=0,c=a);
+list:makelist(rhs(ev(ivps)),a,0,10,2);
+wxplot2d(list,[t,0,8]);
+wxplot2d(flatten([3,list]),[t,0,8]);
