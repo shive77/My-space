@@ -1,0 +1,8 @@
+kill(all);
+
+eq2:diff(y(x),x,3)+3•diff(y(x),x,2)+4•diff(y(x),x)+12•y(x)=0;
+sol2:desolve(eq2,y(x));
+sol2ivp:ev(sol2,at(diffy(x),x,2),x=0)=0,at(diff(y(x),x),x=0)=a,y(0)=0);
+graph1:makelist(ev(rhs(sol2ivp)),a,-2,2);
+wxplot2d(graph1,[x,-3,3],[y,-5,5]);
+
