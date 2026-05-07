@@ -8,7 +8,7 @@ a:0.5;
 x0:200;
 y0:80;
 
-eq1:diff(x,t)=b.x-c1•x•y;
+eq1:diff(x,t)=b•x-c1•x•y;
 eq2:diff(y,t)=c2•x•y-a•y;
 
 sol:rk([rhs(eq1),rhs(eq2)],[x,y],[x0,y0],[t,0,25,2])$;
