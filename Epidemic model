@@ -11,7 +11,7 @@ eq2: diff (z, x) =b•y•z-g•z;
 eq3: diff (w,x)=g•z;
 sol: rk ([rhs (eq1), rhs (eq2), rhs (eq3)], [y,z,w], [s0,i0,0], [t, 0,25,0.02])$;
 
-pl:wxplot2d ([[ discrete, makelist([p[1j,p[2]],p,sol)],[discrete,makelist([p[1],p[3]],p,sol)],[discrete,makelist([p[1],p[4]],p,sol)]])；
+pl:wxplot2d ([[ discrete, makelist([p[1],p[2]],p,sol)],[discrete,makelist([p[1],p[3]],p,sol)],[discrete,makelist([p[1],p[4]],p,sol)]])；
 
 pl:wxplot2d ([ discrete, makelist ([p[1],p[2]],p,sol)],[xlabel,"t"],[ylabel,"y"]);
 p2: wxplot2d ([ discrete, makelist([p[1],p[3]],p,sol)],[xlabel,"t"],[ylabel,"z"]);
