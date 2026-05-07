@@ -4,7 +4,7 @@ v:28;
 cin:3;
 depends(c,t);
 eq:diff(c,t)=(f/v)•(cin-c);
-sol:ode2(eq,c,g);
+sol:ode2(eq,c,t);
 
 ivps:ic1(sol,t=0,c=a);
 list:makelist(rhs(ev(ivps)),a,0,10,2);
