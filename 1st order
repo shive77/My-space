@@ -1,0 +1,14 @@
+load(ode2);
+kill(all);
+depends(y,x);
+eq : diff(y,x)=x^3-x^2+1;
+sol : ode2(eq,y,x);
+ic1(sol,y=1,x=0);
+ivp : ic1(sol,y=b,x=0);
+ivp1 : ev(ivp,b=0);
+ivp2 : ev(ivp,b=1);
+wxplot2d(
+ [rhs(ivp1),rhs(ivp2)],
+ [x,-2,2],
+ [legend,"ivp1","ivp2"]
+);
