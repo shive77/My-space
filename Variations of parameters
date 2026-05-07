@@ -1,0 +1,14 @@
+kill(all);
+
+depends(y,x);
+eq : diff(y,x,2) + y = tan(x);
+ahs : ode2(lhs(eq)=0 , y , x);
+load("functs");
+y1(x) : = sin(x);
+y2(x) : = cos(x);
+r(x) : = tan(x);
+wsn : determinant(wronskian([y1(x),y2(x)],x));
+c1 : integrate(-y2(x)*r(x)/wsn , x);
+c2 : integrate(y1(x)*r(x)/wsn , x);
+yp : c1*y1(x) + c2*y2(x);
+y : rhs(ahs) + yp;
