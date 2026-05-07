@@ -1,7 +1,7 @@
 
 $depends(y,x)$;
 eq1: diff(y,x,2)+3•diff(y,x)+2•y=0;
-sol : ode2(eq,y,x);
+sol1 : ode2(eq,y,x);
 solivp:ic2(sol1,x=0,y=1,diff(y,x)=b);
 graph:makelist(ev(rhs(solivp)),b,-3,3);
 wxplot2d(graph,[x,-2,3],[y,-10,10]);
