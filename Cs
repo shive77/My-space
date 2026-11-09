@@ -1,1 +1,103 @@
+                            Create the tables
+CREATE TABLE STUDENT (
+    RollNo CHAR(6) PRIMARY KEY,
+    StudentName VARCHAR(20),
+    Course VARCHAR(10),
+    DOB DATE
+);
 
+CREATE TABLE SOCIETY (
+    SocID CHAR(6) PRIMARY KEY,
+    SocName VARCHAR(20),
+    MentorName VARCHAR(15),
+    TotalSeats INT UNSIGNED
+);
+
+CREATE TABLE ENROLLMENT (
+    RollNo CHAR(6),
+    SID CHAR(6),
+    DateOfEnrollment DATE,
+    PRIMARY KEY (RollNo, SID),
+    FOREIGN KEY (RollNo) REFERENCES STUDENT(RollNo),
+    FOREIGN KEY (SID) REFERENCES SOCIETY(SocID)
+);
+
+                                   Insert sample data
+INSERT INTO STUDENT VALUES
+('A10001','Aarav','Computer','2005-04-10'),
+('A10002','Anaya','Chemistry','2001-06-15'),
+('X10009','Rohan','Computer','2004-02-20'),
+('Z10019','Priya','Maths','2001-11-05'),
+('S10005','Kabir','Chemistry','2006-03-12');
+
+INSERT INTO SOCIETY VALUES
+('S1','NSS','Gupta',50),
+('S2','Debating','Sharma',30),
+('S3','Dancing','Verma',40),
+('S4','Sahask','Gupta',20);
+
+INSERT INTO ENROLLMENT VALUES
+('A10001','S1','2025-01-10'),
+('A10001','S2','2025-01-12'),
+('A10002','S1','2025-01-15'),
+('X10009','S2','2025-02-01'),
+('Z10019','S3','2025-02-05'),
+('S10005','S1','2025-02-10');
+
+1) Retrieve names of students enrolled in any society
+SELECT DISTINCT StudentName
+FROM STUDENT S
+JOIN ENROLLMENT E ON S.RollNo = E.RollNo;
+
+2) Retrieve all society names
+SELECT SocName FROM SOCIETY;
+
+3)Students whose names start with A
+SELECT * FROM STUDENT
+WHERE StudentName LIKE 'A%';
+
+4)Students studying Computer Science or Chemistry
+SELECT * FROM STUDENT
+WHERE Course IN ('Computer Science', 'Chemistry');
+
+5)Roll numbers not starting with X or Z and ending with 9
+SELECT StudentName FROM STUDENT
+WHERE RollNo NOT LIKE 'X%'
+AND RollNo NOT LIKE 'Z%'
+AND RollNo LIKE '%9';
+
+6)Society details with more than N seats
+SET @N = 30;
+SELECT * FROM SOCIETY
+WHERE TotalSeats > @N;
+
+7)Update mentor name of a specific society
+UPDATE SOCIETY
+SET MentorName = 'Amit'
+WHERE SocID = 'S1';
+SELECT * FROM SOCIETY
+WHERE SocID = 'S1';
+
+8)Society names with more than five enrolled students
+SELECT SocName
+FROM SOCIETY S
+JOIN ENROLLMENT E ON S.SocID = E.SID
+GROUP BY S.SocID, S.SocName
+HAVING COUNT(E.RollNo) > 5;
+
+9)Youngest student enrolled in NSS
+SELECT StudentName
+FROM STUDENT S
+JOIN ENROLLMENT E ON S.RollNo = E.RollNo
+JOIN SOCIETY SO ON E.SID = SO.SocID
+WHERE SO.SocName = 'NSS'
+ORDER BY DOB DESC
+LIMIT 1;
+
+10)Most popular society
+SELECT SO.SocName, COUNT(*) AS Total
+FROM SOCIETY SO
+JOIN ENROLLMENT E ON SO.SocID = E.SID
+GROUP BY SO.SocID, SO.SocName
+ORDER BY Total DESC
+LIMIT 1;
