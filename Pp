@@ -63,8 +63,99 @@ then if not member([A[i],A[k]],R) then s:1,
 if s=1 then return("Not transitive"),
 return("Transitive")
 );
-
 checkTransitive(A,R1);
+
+3a) COVERING RELATION 
+kill(all)$
+findCoveringRelation(A,R):=block(
+[C:[], nR:[], s,e,f],
+for k:1 thru length(R) do
+if R[k][1]#R[k][2] then nR:cons([R[k][1],R[k][2]],nR),
+for j:1 thru length(nR) do(
+e:nR[j][1],
+f:nR[j][2],
+s:0,
+for i:1 thru length(A) do
+if member([e,A[i]],nR) and member([A[i],f],nR) then s:s+1,
+if s=0 then C:cons([e,f],C)
+),
+return(C)
+);
+A:[2,3,4,6,8];
+R:[[2,4],[2,6],[2,8],[3,6],[4,8]];
+C1:findCoveringRelation(A,R);
+
+3b)MAXIMAL ELEMENT 
+kill(all)$
+A:[2,3,4,6,8];
+findRelation(A):=block(
+[A2:cartesian_product_list(A,A),R:[]],
+for i:1 thru length(A2) do(
+t:A2[i],
+if remainder(t[2],t[1])=0 then R:cons(t,R)
+),
+R
+)$
+R:findRelation(A);
+maximalElements(A,R):=block(                   
+[s],
+for k:1 thru length(A) do(
+s:0,
+for i:1 thru length(A) do
+if (k#i) and member([A[k],A[i]],R) then s:s+1,
+if(s=0) then print(A[k],"is maximal")
+)
+)$
+maximalElements(A,R);
+MINIMAL ELEMENT 
+minimalElements(A,R):=block(
+[s],
+for k:1 thru length(A) do(
+s:0,
+for i:1 thru length(A) do
+if (k#i) and member([A[i],A[k]],R) then s:s+1,
+if(s=0) then print(A[k],"is minimal")
+)
+)$
+
+3c) GREATEST ELEMENT 
+kill(all);
+gElement(A, R):=block(
+    [s, f:0, t:0],
+    for j:1 thru length(A) do(
+        s:0,
+        for i:1 thru length(A) do(
+            if(member([A[i], A[j]], R)) then(s:s+1)
+        ),
+        if(s=length(A)) then(t:j, return(t))
+    ),
+    if(t=0) then(return("no greatest element"))
+    else(return(concat(A[t], " is the greatest element")))
+);
+A:[2, 3, 4, 6, 8];
+R:[[8,8],[6,6],[4,8],[4,4],[3,6],[3,3],[2,8],[2,6],[2,4],[2,2]];
+gElement(A, R);
+
+LEAST ELEMENT 
+kill(all);
+sElement(A, R):=block(
+    [s, f:0, t:0],
+    for i:1 thru length(A) do(
+        s:0,
+        for j:1 thru length(A) do(
+            if(member([A[i], A[j]], R)) then(s:s+1)
+        ),
+        if(s=length(A)) then(t:i, return(t))
+    ),
+    if(t=0) then(return("no least element"))
+    else(return(concat(A[t], " is the least element")))
+);
+A:[2, 3, 4, 6, 8];
+R:[[8,8],[6,6],[4,8],[4,4],[3,6],[3,3],[2,8],[2,6],[2,4],[2,2]];
+sElement(A, R);
+
+
+
 
 
 
