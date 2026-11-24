@@ -1,1 +1,81 @@
+1) CARTISIAN PRODUCT LIST
+
+kill(all)$
+findRelation(A):=block(
+ [A2:cartesian_product_list(A,A), R:[]],
+ for i:1 thru length(A2) do(
+  t:A2[i],
+  if remainder(t[1],t[2])=0 then R:cons(t,R)
+ ),
+ R
+)$
+findRelation([1,2])$
+findRelation([1,2,3])$
+findRelation([1,2,3,4])$
+
+2) REFLEXIVE 
+kill(all)$
+A:makelist(k,k,1,4)$
+R1:[[1,1],[1,2],[2,1],[2,2],[3,4],[4,1],[4,4]]$
+
+checkReflexive(A,R):=block(
+ [s:0],
+ for i:1 thru length(A) do(
+  if member([A[i],A[i]],R)=true then s:s+1
+ ),
+ if s=length(A) then return("reflexive")
+ else return("Not reflexive")
+)$
+checkReflexive(A,R1)$
+
+2b) ANTI-SYMETRIC 
+kill(all)$
+A:makelist(k,k,1,4)$
+R1:[[1,1],[1,2],[2,1],[2,2],[3,4],[4,1],[4,4]]$
+R2:[[1,1],[1,2],[2,1]]$
+R8:cartesian_product_list(A,A)$
+
+checkAntiSymmetric(A,R):=block(
+ [s:0,t],
+ for i:1 thru length(R) do(
+  t:R[i],
+  if t[1] # t[2] then
+   if member([t[2],t[1]],R) then s:s+1
+ ),
+ if s=0 then return("Anti symmetric")
+ else return("Not Anti symmetric")
+)$
+checkAntiSymmetric(A,R1)$
+checkAntiSymmetric(A,R2)$
+
+2c) TRANSITIVE 
+kill(all)$
+A: makelist(k,k,1,4);
+R1: [[1,1],[1,2],[2,1],[2,2],[3,4],[4,1],[4,4]];
+
+checkTransitive(A,R):=block(
+[s:0],
+for i:1 thru length(A) do
+for j:1 thru length(A) do
+for k:1 thru length(A) do
+if member([A[i],A[j]],R) and member([A[j],A[k]],R)
+then if not member([A[i],A[k]],R) then s:1,
+if s=1 then return("Not transitive"),
+return("Transitive")
+);
+
+checkTransitive(A,R1);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
